@@ -1,0 +1,11 @@
+C:\Users\ludmila.yurtseva\Documents\Visual Studio 2017\Projects\TestTaskUniversity\TestTaskUniversity\bin\Debug\netcoreapp2.0\TestTaskUniversity.deps.json
+C:\Users\ludmila.yurtseva\Documents\Visual Studio 2017\Projects\TestTaskUniversity\TestTaskUniversity\bin\Debug\netcoreapp2.0\TestTaskUniversity.runtimeconfig.json
+C:\Users\ludmila.yurtseva\Documents\Visual Studio 2017\Projects\TestTaskUniversity\TestTaskUniversity\bin\Debug\netcoreapp2.0\TestTaskUniversity.runtimeconfig.dev.json
+C:\Users\ludmila.yurtseva\Documents\Visual Studio 2017\Projects\TestTaskUniversity\TestTaskUniversity\bin\Debug\netcoreapp2.0\TestTaskUniversity.dll
+C:\Users\ludmila.yurtseva\Documents\Visual Studio 2017\Projects\TestTaskUniversity\TestTaskUniversity\bin\Debug\netcoreapp2.0\TestTaskUniversity.pdb
+C:\Users\ludmila.yurtseva\Documents\Visual Studio 2017\Projects\TestTaskUniversity\TestTaskUniversity\obj\Debug\netcoreapp2.0\TestTaskUniversity.csprojResolveAssemblyReference.cache
+C:\Users\ludmila.yurtseva\Documents\Visual Studio 2017\Projects\TestTaskUniversity\TestTaskUniversity\obj\Debug\netcoreapp2.0\TestTaskUniversity.csproj.CoreCompileInputs.cache
+C:\Users\ludmila.yurtseva\Documents\Visual Studio 2017\Projects\TestTaskUniversity\TestTaskUniversity\obj\Debug\netcoreapp2.0\TestTaskUniversity.AssemblyInfoInputs.cache
+C:\Users\ludmila.yurtseva\Documents\Visual Studio 2017\Projects\TestTaskUniversity\TestTaskUniversity\obj\Debug\netcoreapp2.0\TestTaskUniversity.AssemblyInfo.cs
+C:\Users\ludmila.yurtseva\Documents\Visual Studio 2017\Projects\TestTaskUniversity\TestTaskUniversity\obj\Debug\netcoreapp2.0\TestTaskUniversity.dll
+C:\Users\ludmila.yurtseva\Documents\Visual Studio 2017\Projects\TestTaskUniversity\TestTaskUniversity\obj\Debug\netcoreapp2.0\TestTaskUniversity.pdb

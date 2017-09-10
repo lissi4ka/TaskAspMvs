@@ -1,0 +1,160 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using TestTaskUniversity.Models.Users
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TestTaskUniversity</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/dashboard/custom.css">
+        
+        <!-- Font Awesome -->
+        <link href="~/dashboard/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/dashboard/custom.css" asp-append-version="true">
+
+        <!-- Font Awesome -->
+        <link href="~/dashboard/font-awesome/css/font-awesome.min.css" rel="stylesheet" asp-append-version="true">
+    </environment>
+</head>
+
+<body class="nav-md">
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="container body">
+        <div class="main_container">
+
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        @if (User.IsInRole("admin") || User.IsInRole("user"))
+                        {
+                            <a asp-controller="MainPages" asp-action="IndexAdmin" class="site_title"><i class="fa fa-wrench"></i> <span>Автосервис v1.0</span></a>
+                        }
+                        else if (User.IsInRole("sklad"))
+                        {
+                            <a asp-controller="MainPages" asp-action="IndexStore" class="site_title"><i class="fa fa-wrench"></i> <span>Автосервис v1.0</span></a>
+                        }
+                        else if (User.IsInRole("dictionary"))
+                        {
+                            <a asp-controller="MainPages" asp-action="IndexDictionary" class="site_title"><i class="fa fa-wrench"></i> <span>Автосервис v1.0</span></a>
+                        }
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        @*<div class="profile_pic">
+                                    <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                                </div>*@
+                        <div class="profile_info">
+
+                            <h2>Hello!</h2>
+                            @User.Identity.Name
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br/>
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>Main</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-table"></i> Courses <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a asp-controller="Courses" asp-action="Index">All Courses</a></li>
+                                        @if (!User.IsInRole("Student"))
+                                        {
+                                            <li><a asp-controller="Courses" asp-action="Create">Add Course</a></li>
+                                        }
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="menu_section">
+                                <h3>Admin panel</h3>
+                                <ul class="nav side-menu">
+                                    <li>
+                                        <a asp-area="" asp-controller="Account" asp-action="Register"><i class="fa fa-user-plus"></i>Add user</a>
+
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Account" asp-action="AllUsers"><i class="fa fa-users"></i> All users</a>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                    <!-- /sidebar menu -->
+                </div>
+            </div>
+
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+
+                            <li>
+                                <form method="post" asp-controller="Account" asp-action="LogOff">
+                                    <input type="submit" class="btn btn-link navbar-btn navbar-link" value="Log out"/>
+                                </form>
+                            </li>
+                            <li>
+                                <a asp-controller="Account" asp-action="UserEditAccount">@User.Identity.Name</a>
+                            </li>
+                        </ul>
+
+
+                    </nav>
+
+                </div>
+            </div>
+
+            <!-- /top navigation -->
+        </div>
+    </div>
+}
+
+@RenderBody()
+<environment include="Development">
+    <script src="~/lib/jquery/jquery-3.2.1.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="~/dashboard/custom.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</environment>
+<environment exclude="Development">
+    <script src="~/lib/jquery/jquery-3.2.1.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="~/dashboard/custom.min.js"></script>
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
+</environment>
+
+@RenderSection("Scripts", required: false)
+</body>
+
+</html>

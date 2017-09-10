@@ -1,0 +1,197 @@
+﻿@using TestTaskUniversity.Models.Users
+@model TestTaskUniversity.ViewModels.UserEditViewModel
+@{
+    ViewData["Title"] = "User Account";
+
+}
+<head>
+    <link rel="stylesheet" href="~/css/jquery-ui.css">
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="right_col" role="main">
+            <div class="page-title">
+                <div class="title_left">
+                    <h2>Edit account</h2>
+                </div>
+                <div class="title_right">
+                    <div class="alert alert-success hidden" id="alrtSucsess" role="alert">
+                    </div>
+                    <div class="alert alert-danger hidden" id="alrtDanger" role="alert">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_content">
+                        @if (User.IsInRole(ViewBag.Admin) && (ViewBag.CountAdmin > 1))
+                        {
+                            <button class="removeMyAccount btn btn-danger col-md-offset-11" title="Remove my account">Remove account</button>
+                        }
+                        else if (User.IsInRole(ViewBag.Student) || User.IsInRole(ViewBag.Teacher))
+                        {
+                            <button class="removeMyAccount btn btn-danger col-md-offset-11" title="Remove my account">Remove account</button>
+                        }
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <section>
+                                        <form method="post" asp-controller="Account" asp-action="UserEditAccount" class="form-horizontal">
+
+                                            <div asp-validation-summary="ModelOnly"></div>
+                                            <input asp-for="Id" id="userId" class="form-group hidden"/>
+                                            <div class="form-group">
+                                                <label asp-for="Email" class="col-md-2 control-label"></label><br/>
+                                                <input asp-for="Email" class="form-group"/>
+                                                <span asp-validation-for="Email" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Login" class="col-md-2 control-label"></label><br/>
+                                                <input asp-for="Login" class="form-group"/>
+                                                <span asp-validation-for="Login" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FirstName" class="col-md-2 control-label"></label><br/>
+                                                <input asp-for="FirstName" class="form-group"/>
+                                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="LastName" class="col-md-2 control-label"></label><br/>
+                                                <input asp-for="LastName" class="form-group"/>
+                                                <span asp-validation-for="LastName" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Age" class="col-md-2 control-label"></label><br/>
+                                                <input asp-for="Age" class="form-group"/>
+                                                <span asp-validation-for="Age" class="text-danger"></span>
+                                            </div>
+
+                                            @if (User.IsInRole(ViewBag.Student))
+                                            {
+                                                <div class="form-group">
+                                                    <label asp-for="Department" class="col-md-2 control-label"></label><br/>
+                                                    <input asp-for="Department" class="form-group"/>
+                                                    <span asp-validation-for="Department" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label asp-for="Direction" class="col-md-2 control-label"></label><br/>
+                                                    <input asp-for="Direction" class="form-group"/>
+                                                    <span asp-validation-for="Direction" class="text-danger"></span>
+                                                </div>
+                                            }
+                                            else if (User.IsInRole(ViewBag.Teacher))
+                                            {
+                                                <div class="form-group">
+                                                    <label asp-for="Subject" class="col-md-2 control-label"></label><br/>
+                                                    <input asp-for="Subject" class="form-group"/>
+                                                    <span asp-validation-for="Subject" class="text-danger"></span>
+                                                </div>
+                                            }
+                                            <div class="form-group">
+                                                <label asp-for="OldPassword" class="col-md-2 control-label"></label><br/>
+                                                <input asp-for="OldPassword" class="form-group"/>
+                                                <span asp-validation-for="OldPassword" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="NewPassword" class="col-md-2 control-label"></label><br/>
+                                                <input asp-for="NewPassword" class="form-group"/>
+                                                <span asp-validation-for="NewPassword" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-success" value="Edit"/>
+                                            </div>
+                                        </form>
+                                        <div>
+                                            @if (User.IsInRole(ViewBag.Student))
+                                            {
+                                                @foreach (var item in Model.StudentCourses)
+                                                 {
+                                                     <div class="col-md-4 col-sm-4 col-xs-12">
+                                                         <div class="x_panel">
+                                                             <div class="x_title">
+                                                                 <h2>@Html.DisplayFor(modelItem => item.Course.Subject)</h2>
+                                                                 <ul class="nav navbar-right panel_toolbox">
+                                                                     <li>
+                                                                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                                     </li>
+                                                                     <li>
+                                                                         <a class="close-link"><i class="fa fa-close @item.Course.Id"></i></a>
+                                                                     </li>
+                                                                 </ul>
+                                                                 <div class="clearfix"></div>
+                                                             </div>
+                                                             <div class="x_content">
+                                                                 @Html.DisplayFor(modelItem => item.Course.Name)
+                                                                 <br/>
+                                                                 @Html.DisplayNameFor(modelItem => item.Course.Hours) : @Html.DisplayFor(modelItem => item.Course.Hours)
+                                                                 <br/>
+
+                                                                 <div>
+                                                                     <span class="text-success"><strong>In My List of Courses</strong></span>
+                                                                     <button class="removeFromMyList btn btn-danger" data-id="@item.Course.Id"><i><span class="fa fa-trash-o"></span></i></button>
+                                                                 </div>
+
+                                                             </div>
+                                                         </div>
+                                                     </div>
+                                                 }
+                                            }
+                                            else if (User.IsInRole(ViewBag.Teacher))
+                                            {
+                                                @foreach (var item in Model.TeacherCourses)
+                                                 {
+                                                     <div class="col-md-4 col-sm-4 col-xs-12">
+                                                         <div class="x_panel">
+                                                             <div class="x_title">
+                                                                 <h2>@Html.DisplayFor(modelItem => item.Course.Subject)</h2>
+                                                                 <ul class="nav navbar-right panel_toolbox">
+                                                                     <li>
+                                                                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                                     </li>
+                                                                     <li>
+                                                                         <a class="close-link"><i class="fa fa-close @item.Course.Id"></i></a>
+                                                                     </li>
+                                                                 </ul>
+                                                                 <div class="clearfix"></div>
+                                                             </div>
+                                                             <div class="x_content">
+                                                                 @Html.DisplayFor(modelItem => item.Course.Name)
+                                                                 <br/>
+                                                                 @Html.DisplayNameFor(modelItem => item.Course.Hours) : @Html.DisplayFor(modelItem => item.Course.Hours)
+                                                                 <br/>
+
+                                                                 <div>
+                                                                     <div id="buttonGroup_@item.Course.Id">
+                                                                         <button class="btnDontWantRead btn btn-default" data-id="@item.Course.Id">Remove from my list</button>
+                                                                     </div>
+                                                                 </div>
+
+                                                             </div>
+                                                         </div>
+                                                     </div>
+                                                 }
+                                            }
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialogRemoveAccount">
+    <form id="removeAccount">
+        <h2>Are you sure you want to delete your account?</h2>
+        <input type="submit" tabindex="-1" style="position: absolute; top: -1000px">
+    </form>
+</div>
+</body>
+@section Scripts {
+<script src="~/lib/jquery/jquery-ui.js"></script>
+    <script src="~/js/Account/userEditAccount.js"></script>
+}
+

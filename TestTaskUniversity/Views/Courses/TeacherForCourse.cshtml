@@ -1,0 +1,45 @@
+﻿@model IEnumerable<TestTaskUniversity.Models.Users.ApplicationUser>
+@{
+    var admin = ViewBag.Admin;
+}
+<input value="@ViewBag.CourseId" class="hidden" type="number" id="courseId"/>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Age)
+        </th>
+        @if (User.IsInRole(admin))
+        {
+            <th></th>
+        }
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            @if (User.IsInRole(admin))
+            {
+                <td>
+                    <button class="deleteTeacher btn btn-default" data-id="@item.Id" title="Remove from this course"><i><span class="fa fa-trash-o"></span></i></button>
+                </td>
+            }
+        </tr>
+    }
+    </tbody>
+</table>

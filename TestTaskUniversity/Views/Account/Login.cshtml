@@ -1,0 +1,56 @@
+﻿@model TestTaskUniversity.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="index" role="main">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h2>Login</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <section>
+                                            <form method="post" asp-controller="Account" asp-action="Login"
+                                                  asp-route-returnUrl="@Model.ReturnUrl" class="form-horizontal">
+                                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                <div class="form-group">
+                                                    <label asp-for="Login" class="col-md-2 control-label"></label><br />
+                                                    <input asp-for="Login" class="form-group" />
+                                                    <span asp-validation-for="Login" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label asp-for="Password" class="col-md-2 control-label"></label><br />
+                                                    <input asp-for="Password" class="form-group" />
+                                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-offset-2 col-md-10">
+                                                        <input asp-for="RememberMe" /> <label asp-for="RememberMe"></label>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="submit" class="btn btn-success" value="Sign In" />
+                                                </div>
+                                            </form>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

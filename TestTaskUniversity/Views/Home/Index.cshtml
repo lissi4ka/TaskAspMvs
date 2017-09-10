@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="index" role="main">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_content" style="min-height: 880px">
+                            <div class="row block_index">
+                                <h1 class="text_index">Welcome!</h1>
+                                <h2 class="text_index">This page present list of courses of our University</h2>
+                                <h2 class="text_index">You can Check Into your account, and select course for yourself</h2>
+                                    <a asp-action="Login" asp-controller="Account" class="text_index index_url"><i class="fa fa-sign-in"></i> <span>Log In!</span></a>
+                                <h2 class="text_index">Or you can Register How teacher or Student.</h2>
+                                <h2 class="text_index">If you will register how teacher you can create self course</h2>
+                                <a asp-action="Register" asp-controller="Account" class="text_index index_url"><i class="fa fa-plus-square-o"></i> <span>Register</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>

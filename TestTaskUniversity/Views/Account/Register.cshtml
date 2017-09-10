@@ -1,0 +1,100 @@
+﻿@using TestTaskUniversity.Models.Users
+@model TestTaskUniversity.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+<head>
+    <link rel="stylesheet" href="~/css/dashboard/custom.css" asp-append-version="true">
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="index" role="main">
+            <div class="page-title">
+                <div class="title_left">
+                    <h2>Register new User</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <section>
+                                        <form method="post" asp-controller="Account" asp-action="Register" class="form-horizontal">
+   
+                                            <div asp-validation-summary="ModelOnly"></div>
+                                            <div class="form-group">
+                                                @foreach (TypePerson type in Enum.GetValues(typeof(TypePerson)))
+                                                {
+                                                    if (type == TypePerson.Admin)
+                                                    {
+                                                        if (User.IsInRole("Admin"))
+                                                        {
+                                                            <label class="col-md-2 control-label">
+                                                                <input asp-for="TypePerson" type="radio" value="@type" class="form-group"/>
+                                                                @type
+                                                            </label>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label class="col-md-2 control-label">
+                                                            <input asp-for="TypePerson" type="radio" value="@type" class="form-group"/>
+                                                            @type
+                                                        </label>
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Email" class="col-md-2 control-label"></label><br/>
+                                                <input asp-for="Email" class="form-group"/>
+                                                <span asp-validation-for="Email" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Login" class="col-md-2 control-label"></label><br/>
+                                                <input asp-for="Login" class="form-group"/>
+                                                <span asp-validation-for="Login" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FirstName" class="col-md-2 control-label"></label><br/>
+                                                <input asp-for="FirstName" class="form-group"/>
+                                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="LastName" class="col-md-2 control-label"></label><br/>
+                                                <input asp-for="LastName" class="form-group"/>
+                                                <span asp-validation-for="LastName" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Age" class="col-md-2 control-label"></label><br/>
+                                                <input asp-for="Age" class="form-group"/>
+                                                <span asp-validation-for="Age" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Password" class="col-md-2 control-label"></label><br/>
+                                                <input asp-for="Password" class="form-group"/>
+                                                <span asp-validation-for="Password" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="PasswordConfirm" class="col-md-2 control-label"></label><br/>
+                                                <input asp-for="PasswordConfirm" class="form-group"/>
+                                                <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="submit"  class="btn btn-success" value="Check in"/>
+                                            </div>
+                                        </form>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+

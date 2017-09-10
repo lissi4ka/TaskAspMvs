@@ -1,0 +1,157 @@
+﻿@using Microsoft.CodeAnalysis
+@using TestTaskUniversity.Models
+@using TestTaskUniversity.ViewModels.TagHelper
+@model TestTaskUniversity.ViewModels.TagHelper.ItemIndexViewModel<TestTaskUniversity.Models.Course.Course>
+    
+@*подключаем все tag-хелперы*@
+@addTagHelper "*, HookahWebApp"
+
+@{
+    ViewData["Title"] = "Courses";
+    var student = ViewBag.Student;
+    var teacher = ViewBag.Teacher;
+    var admin = ViewBag.Admin;
+}
+<head>
+    <link rel="stylesheet" href="~/css/jquery-ui.css">
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="right_col" role="main">
+            <div class="page-title">
+                <div class="title_left">
+                    <h2>Courses</h2>
+                </div>
+                <div class="title_right">
+                    <div class="alert alert-success hidden" id="alrtSucsess" role="alert">
+                    </div>
+                    <div class="alert alert-danger hidden" id="alrtDanger" role="alert">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <section>
+                                        <div class="row">
+
+                                            <form asp-action="Index" method="get">
+                                                <div class="form-actions no-color">
+                                                    <div class="col-md-8">
+                                                        <div class="col-md-9">
+                                                            @Html.DropDownList("pageSize", Model.PageViewModel.PagesList as SelectList,
+                                                                htmlAttributes: new { @class = "form-control" })
+                                                        </div>
+                                                        <div class="col-md-1"></div>
+                                                        <input type="submit" value="Show" class="btn btn-success col-md-2" />
+                                                        
+                                                    </div>
+                                                    <div class="col-md-offset-8">
+                                                        Find: <input type="text" name="SearchString" id="searchString" value="@Model.FilterViewModel.CurrentFilter" />
+                                                        <input type="submit" value="Search" class="btn btn-success" /> |
+                                                        <a asp-action="Index">Reset filters</a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        @if (User.IsInRole(admin) || User.IsInRole(teacher))
+                                        {
+                                            <p>
+                                                <a asp-action="Create">Create New</a>
+                                            </p>
+                                        }
+                                        @foreach (var item in Model.Items)
+                                        {
+                                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                                <div class="x_panel">
+                                                    <div class="x_title">
+                                                        <h2>@Html.DisplayFor(modelItem => item.Subject)</h2>
+                                                        <ul class="nav navbar-right panel_toolbox">
+                                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                            </li>
+                                                            <li><a class="close-link"><i class="fa fa-close @item.Id"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="x_content">
+                                                        @Html.DisplayFor(modelItem => item.Name)
+                                                        <br/>
+                                                        @Html.DisplayNameFor(modelItem => item.Hours) : @Html.DisplayFor(modelItem => item.Hours)
+                                                        <br/>
+                                                        @if (User.IsInRole(admin))
+                                                        {
+                                                            <button class="edit btn btn-warning" data-id="@item.Id">Edit</button>
+                                                            <button class="delete btn btn-danger" data-id="@item.Id">Delete</button>
+                                                        }
+                                                        @if (User.IsInRole(teacher))
+                                                        {
+                                                            if (item.HasInUserList)
+                                                            {
+                                                                <div id="buttonGroup_@item.Id">
+                                                                    <button class="edit btn btn-warning" data-id="@item.Id">Edit</button>
+                                                                    <button class="delete btn btn-danger" data-id="@item.Id">Delete</button>
+                                                                    <button class="btnDontWantRead btn btn-default" data-id="@item.Id">Remove from my list</button>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div id="buttonGroup_@item.Id">
+                                                                    <button class="btnWantRead btn btn-default" data-id="@item.Id">I want read this course</button>
+                                                                </div>
+                                                            }
+                                                        }
+                                                        @if (User.IsInRole(student))
+                                                        {
+                                                            if (item.HasInUserList)
+                                                            {
+                                                                <div id="buttonGroup_@item.Id">
+                                                                    <span class="text-success"><strong>In My List of Courses</strong></span>
+                                                                    <button class="removeFromMyList btn btn-danger" data-id="@item.Id"><i><span class="fa fa-trash-o"></span></i></button>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div id="buttonGroup_@item.Id">
+                                                                    <button class="btnAddInMyList btn btn-warning" data-id="@item.Id">Add in My</button>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialog-form" title="Select theacher">
+    <label>Theacher for this course</label>
+    <form id="seelectTheacher">
+        <!-- Allow form submission with keyboard without duplicating the dialog button -->
+        <input type="submit" tabindex="-1" style="position: absolute; top: -1000px">
+    </form>
+</div>
+<div id="dialogRemoveCourse" title="Are you sure you want to delete this?">
+    <form id="removeCourse">
+        <!-- Allow form submission with keyboard without duplicating the dialog button -->
+        <input type="submit" tabindex="-1" style="position: absolute; top: -1000px">
+    </form>
+</div>
+</body>
+
+@section Scripts {
+    <script src="~/lib/jquery/jquery-ui.js"></script>
+    <script src="~/js/Course/index.js"></script>
+}

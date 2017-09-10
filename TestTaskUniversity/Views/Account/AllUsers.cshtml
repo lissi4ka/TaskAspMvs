@@ -1,0 +1,166 @@
+﻿@using TestTaskUniversity.Models.Users
+@using TestTaskUniversity.ViewModels
+@model TestTaskUniversity.ViewModels.AllUsersViewModel
+
+@{
+    ViewData["Title"] = "AllUsers";
+    var studentViewModel = ViewBag.StudentViewModel as AllUsersViewModel;
+    var adminViewModel = ViewBag.AdminViewModel as AllUsersViewModel;
+    var teacherViewModel = ViewBag.TeacherViewModel as AllUsersViewModel;
+}
+<head>
+    <link rel="stylesheet" href="~/css/jquery-ui.css">
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="right_col" role="main">
+            <div class="page-title">
+                <div class="title_left">
+                    <h2>AllUsers</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <section>
+                                        
+                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                            @if (teacherViewModel != null && teacherViewModel.Users.Count > 0)
+                                            {
+                                                <h2>Teachers</h2>
+                                                foreach (var teacher in teacherViewModel.Users)
+                                                {
+                                                    <div class="col-md-12 col-sm-12 col-xs-12 profile_details @teacher.Id">
+                                                        <div class="well profile_view">
+                                                            <div class="col-sm-12">
+                                                                <h4 class="brief"><i>Teacher</i></h4>
+                                                                <div class="left col-xs-12">
+                                                                    <h3>@teacher.FirstName @teacher.LastName </h3>
+                                                                    <p><strong>Age: </strong> @teacher.Age</p>
+                                                                    <p><strong>Subject: </strong> @teacherViewModel.Teachers.Find(t => t.AppUserId == teacher.Id).Subject</p>
+                                                                    <h4>Courses</h4>
+                                                                    <ul>
+                                                                        @foreach (var course in teacherViewModel.Teachers.Find(t => t.AppUserId == teacher.Id).TeacherCourses)
+                                                                        {
+                                                                            <li>
+                                                                                @course.Course.Subject: @course.Course.Name
+                                                                            </li>
+                                                                        }
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-12 bottom text-center">
+                                                                <div class="col-xs-12 col-sm-6 emphasis">
+                                                                    <button type="button" class="removeUser btn btn-danger btn-xs" data-id="@teacher.Id" data-role="Teacher">
+                                                                        <i class="fa fa-trash-o"></i>
+                                                                    </button>
+                                                                    <button type="button" class="editUser btn btn-primary btn-xs" data-id="@teacher.Id">
+                                                                        <i class="fa fa-pencil"> </i> Edit Account
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                        
+                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                            @if (studentViewModel != null && studentViewModel.Users.Count > 0)
+                                            {
+                                                <h2>Students</h2>
+                                                foreach (var student in studentViewModel.Users)
+                                                {
+                                                    <div class="col-md-12 col-sm-12 col-xs-12 profile_details @student.Id">
+                                                        <div class="well profile_view">
+                                                            <div class="col-sm-12">
+                                                                <h4 class="brief"><i>Student</i></h4>
+                                                                <div class="left col-xs-12">
+                                                                    <h3>@student.FirstName @student.LastName </h3>
+                                                                    <p><strong>Age: </strong> @student.Age</p>
+                                                                    <p><strong>Department: </strong> @studentViewModel.Students.Find(t => t.AppUserId == student.Id).Department</p>
+                                                                    <p><strong>Direction: </strong> @studentViewModel.Students.Find(t => t.AppUserId == student.Id).Direction</p>
+                                                                    <h4>Courses</h4>
+                                                                    <ul>
+                                                                        @foreach (var course in studentViewModel.Students.Find(t => t.AppUserId == student.Id).StudentCourses)
+                                                                        {
+                                                                            <li>
+                                                                                @course.Course.Subject: @course.Course.Name
+                                                                            </li>
+                                                                        }
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-12 bottom text-center">
+                                                                <div class="col-xs-12 col-sm-6 emphasis">
+                                                                    <button type="button" class="removeUser btn btn-danger btn-xs" data-id="@student.Id" data-role="Student">
+                                                                        <i class="fa fa-trash-o"></i>
+                                                                    </button>
+                                                                    <button type="button" class="editUser btn btn-primary btn-xs" data-id="@student.Id">
+                                                                        <i class="fa fa-pencil"> </i> Edit Account
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                        
+                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                            @if (adminViewModel != null && adminViewModel.Users.Count > 0)
+                                            {
+                                                <h2>Admins</h2>
+                                                foreach (var admin in adminViewModel.Users)
+                                                {
+                                                    <div class="col-md-12 col-sm-12 col-xs-12 profile_details @admin.Id">
+                                                        <div class="well profile_view">
+                                                            <div class="col-sm-12">
+                                                                <h4 class="brief"><i>Student</i></h4>
+                                                                <div class="left col-xs-12">
+                                                                    <h3>@admin.FirstName @admin.LastName </h3>
+                                                                    <p><strong>Age: </strong> @admin.Age</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-12 bottom text-center">
+                                                                <div class="col-xs-12 col-sm-6 emphasis">
+                                                                    <button type="button" class="removeUser btn btn-danger btn-xs" data-id="@admin.Id" data-role="Admin">
+                                                                        <i class="fa fa-trash-o"></i>
+                                                                    </button>
+                                                                    <button type="button" class="editUser btn btn-primary btn-xs" data-id="@admin.Id" >
+                                                                        <i class="fa fa-pencil"> </i> Edit Account
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialogRemoveUser" title="Are you sure you want to delete this User?">
+    <form id="removeUser">
+        <!-- Allow form submission with keyboard without duplicating the dialog button -->
+        <input type="submit" tabindex="-1" style="position: absolute; top: -1000px">
+    </form>
+</div>
+</body>
+
+@section Scripts {
+    <script src="~/lib/jquery/jquery-ui.js"></script>
+    <script src="~/js/Account/allUsers.js"></script>
+}
+

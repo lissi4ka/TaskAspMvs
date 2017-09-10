@@ -1,0 +1,166 @@
+﻿@using TestTaskUniversity.Models.Users
+@model TestTaskUniversity.ViewModels.UserEditViewModel
+@{
+    ViewData["Title"] = "StudentEditAccount";
+    
+}
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="right_col" role="main">
+            <div class="page-title">
+                <div class="title_left">
+                    <h2>Edit my account</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <section>
+                                        <form method="post" asp-controller="Account" asp-action="StudentEditAccount" class="form-horizontal">
+
+                                            <div asp-validation-summary="ModelOnly"></div>
+                                            <div class="form-group">
+                                                <label asp-for="Email" class="col-md-2 control-label"></label><br />
+                                                <input asp-for="Email" class="form-group" />
+                                                <span asp-validation-for="Email" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Login" class="col-md-2 control-label"></label><br />
+                                                <input asp-for="Login" class="form-group" />
+                                                <span asp-validation-for="Login" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="FirstName" class="col-md-2 control-label"></label><br />
+                                                <input asp-for="FirstName" class="form-group" />
+                                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="LastName" class="col-md-2 control-label"></label><br />
+                                                <input asp-for="LastName" class="form-group" />
+                                                <span asp-validation-for="LastName" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Age" class="col-md-2 control-label"></label><br />
+                                                <input asp-for="Age" class="form-group" />
+                                                <span asp-validation-for="Age" class="text-danger"></span>
+                                            </div>
+                                           
+                                            @if (User.IsInRole(ViewBag.Student))
+                                            {
+                                                <div class="form-group">
+                                                    <label asp-for="Department" class="col-md-2 control-label"></label><br/>
+                                                    <input asp-for="Department" class="form-group"/>
+                                                    <span asp-validation-for="Department" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label asp-for="Direction" class="col-md-2 control-label"></label><br/>
+                                                    <input asp-for="Direction" class="form-group"/>
+                                                    <span asp-validation-for="Direction" class="text-danger"></span>
+                                                </div>
+                                            }else if (User.IsInRole(ViewBag.Teacher))
+                                            {
+                                                <div class="form-group">
+                                                    <label asp-for="Subject" class="col-md-2 control-label"></label><br/>
+                                                    <input asp-for="Subject" class="form-group"/>
+                                                    <span asp-validation-for="Subject" class="text-danger"></span>
+                                                </div>
+                                            }
+                                            <div class="form-group">
+                                                <label asp-for="Password" class="col-md-2 control-label"></label><br />
+                                                <input asp-for="Password" class="form-group" />
+                                                <span asp-validation-for="Password" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="PasswordConfirm" class="col-md-2 control-label"></label><br />
+                                                <input asp-for="PasswordConfirm" class="form-group" />
+                                                <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-success" value="Edit"/>
+                                            </div>
+                                        @if (User.IsInRole(ViewBag.Student))
+                                        {
+                                            @foreach (var item in Model.StudentCourses)
+                                            {
+                                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="x_panel">
+                                                        <div class="x_title">
+                                                            <h2>@Html.DisplayFor(modelItem => item.Course.Subject)</h2>
+                                                            <ul class="nav navbar-right panel_toolbox">
+                                                                <li>
+                                                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="close-link"><i class="fa fa-close"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="x_content">
+                                                            @Html.DisplayFor(modelItem => item.Course.Name)
+                                                            <br />
+                                                            @Html.DisplayNameFor(modelItem => item.Course.Hours) : @Html.DisplayFor(modelItem => item.Course.Hours)
+                                                            <br />
+                                                               
+                                                            <div>
+                                                                <span class="text-success"><strong>In My List of Courses</strong></span>
+                                                                <button class="removeFromMyList btn btn-danger" data-id="@item.Course.Id"><i><span class="fa fa-trash-o"></span></i></button>
+                                                            </div>
+                                                                   
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                        else if (User.IsInRole(ViewBag.Teacher))
+                                        {
+                                            @foreach (var item in Model.TeacherCourses)
+                                            {
+                                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="x_panel">
+                                                        <div class="x_title">
+                                                            <h2>@Html.DisplayFor(modelItem => item.Course.Subject)</h2>
+                                                            <ul class="nav navbar-right panel_toolbox">
+                                                                <li>
+                                                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="close-link"><i class="fa fa-close"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="x_content">
+                                                            @Html.DisplayFor(modelItem => item.Course.Name)
+                                                            <br />
+                                                            @Html.DisplayNameFor(modelItem => item.Course.Hours) : @Html.DisplayFor(modelItem => item.Course.Hours)
+                                                            <br />
+
+                                                            <div>
+                                                                <div id="buttonGroup_@item.Course.Id">
+                                                                    <button class="btnDontWantRead btn btn-default" data-id="@item.Course.Id">Remove from my list</button>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                        </form>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
